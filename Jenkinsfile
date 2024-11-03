@@ -9,9 +9,9 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
+                    
                     withSonarQubeEnv('SonarQube_server') {
-                        
-                        sh 'sonar-scanner -Dsonar.projectKey=sonar-test -Dsonar.login=$SONARQUBE_TOKEN'
+                        sh 'sonar-scanner'
                     }
                 }
             }
@@ -19,14 +19,10 @@ pipeline {
     }
     post {
         success {
-            echo 'SonarQube analysis completed successfully!'
+            echo 'SonarQube analysis completed successfully.'
         }
         failure {
             echo 'SonarQube analysis failed!'
-        }
-        always {
-            
-            echo 'Pipeline execution finished.'
         }
     }
 }
