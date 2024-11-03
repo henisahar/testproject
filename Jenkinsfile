@@ -30,26 +30,14 @@ pipeline {
             }
         }
 
-      stage('Run Docker Compose') {
-    steps {
-        bat 'docker-compose -f docker-compose.yml build'
-        bat 'whoami'
-        bat 'docker-compose -f docker-compose.yml up -d'
-    }
-}
-
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube_server') {
-                    bat 'npx sonar-scanner -Dsonar.projectKey=trello-app -Dsonar.projectName=trello-app -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8 -Dsonar.token=%SONAR_LOGIN% -Dsonar.exclusions=**/node_modules/**'
+                script {
+                    withSonarQubeEnv(SONARQUBE_ENV) {
+                        bat "npx sonar-scanner -Dsonar.projectKey=trello-app -Dsonar.projectName=trello-app -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8 -Dsonar.token=${sonarqube-token} -Dsonar.exclusions=**/node_modules/**"
+                    }
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            bat 'docker-compose down'
         }
     }
 }
