@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube_server') {
-                      
+                        
                         sh 'sonar-scanner -Dsonar.projectKey=sonar-test -Dsonar.login=$SONARQUBE_TOKEN'
                     }
                 }
@@ -23,6 +23,10 @@ pipeline {
         }
         failure {
             echo 'SonarQube analysis failed!'
+        }
+        always {
+            
+            echo 'Pipeline execution finished.'
         }
     }
 }
