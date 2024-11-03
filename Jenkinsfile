@@ -30,13 +30,13 @@ pipeline {
             }
         }
 
-        stage('Run Docker Compose') {
-            steps {
-                bat 'docker-compose build'
-                bat 'whoami'
-                bat 'docker-compose up -d'
-            }
-        }
+      stage('Run Docker Compose') {
+    steps {
+        bat 'docker-compose -f path/to/docker-compose.yml build'
+        bat 'whoami'
+        bat 'docker-compose -f path/to/docker-compose.yml up -d'
+    }
+}
 
         stage('SonarQube Analysis') {
             steps {
