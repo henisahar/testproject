@@ -10,8 +10,8 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube_server') {
-                       
-                        sh 'sonar-scanner -Dsonar.projectKey=myProjectKey -Dsonar.sources=src -Dsonar.login=$SONARQUBE_TOKEN'
+                      
+                        sh 'sonar-scanner -Dsonar.projectKey=sonar-test -Dsonar.login=$SONARQUBE_TOKEN'
                     }
                 }
             }
