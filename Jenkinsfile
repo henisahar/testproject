@@ -40,16 +40,16 @@ pipeline {
         }
         
         
-       stage('SonarQube Analysis') {
-        steps {
-            withSonarQubeEnv('sonar') {
-                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'sonarqube token')]) {
-                        bat "npx sonar-scanner -Dsonar.projectKey=sonar-test -Dsonar.projectName=sonar-test -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8 -Dsonar.token=%sonarqube-token% -Dsonar.exclusions=**/node_modules/**"
-                    }
-                }
+     stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('sonar') {
+            withCredentials([string(credentialsId: 'test-sonar', variable: 'sonarqube_token')]) {
+                bat "npx sonar-scanner -Dsonar.projectKey=sonar-test -Dsonar.projectName=sonar-test -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.sourceEncoding=UTF-8 -Dsonar.token=%sonarqube_token% -Dsonar.exclusions=**/node_modules/**"
             }
         }
     }
+}
+
     post{
         always{
             script {
